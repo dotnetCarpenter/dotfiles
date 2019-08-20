@@ -38,3 +38,39 @@ fi
 
 # enable passphrase prompt for gpg
 export GPG_TTY=$(tty)
+
+## START SET TERMINAL TITLE ###
+# https://superuser.com/questions/79972/set-the-title-of-the-terminal-window-to-the-current-directory
+# set the title of the terminal tab to the current directory
+set_prompt () {
+    BASE_PATH="${PWD##*/}"
+    echo -ne "\033]0;$BASE_PATH\007"
+}
+
+set_my_tab () {
+   update_terminal_cwd
+   set_prompt
+}
+
+update_terminal_cwd ()
+{
+    local url_path='';
+    {
+        local i ch hexch LC_CTYPE=C LC_ALL=;
+        for ((i = 0; i < ${#PWD}; ++i))
+        do
+            ch="${PWD:i:1}";
+            if [[ "$ch" =~ [/._~A-Za-z0-9-] ]]; then
+                url_path+="$ch";
+            else
+                printf -v hexch "%02X" "'$ch";
+                url_path+="%${hexch: -2:2}";
+            fi;
+        done
+    };
+
+    printf '\e]7;%s\a' "file://$HOSTNAME$url_path"
+}
+
+PROMPT_COMMAND=set_my_tab
+### END SET TERMINAL TITLE ###
