@@ -33,6 +33,7 @@ if [[ -z "$(pidof ssh-agent)" ]]
 then
 echo "Starting ssh-agent"
 eval $(ssh-agent -s)
+echo "Use ssh-add to type in your passphrase once"
 fi
 
 # enable passphrase prompt for gpg
