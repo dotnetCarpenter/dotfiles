@@ -1,3 +1,6 @@
+echo "Ignoring the following paths:" \
+     ".git, node_modules, dist, .nuxt, ./assets/js/research/* and ./tests/fixtures/*"
+
 find . \( \
   -name .git -o \
   -name node_modules -o \

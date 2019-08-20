@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+# This file is used by the alias "t-remove", defined in .transmission_aliases
+transmission-remote --auth 'transmission:transmission' -t $1 -r

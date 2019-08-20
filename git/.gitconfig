@@ -1,0 +1,15 @@
+[alias]
+	st = status
+	ch = checkout
+[user]
+	signingkey = C32DC3150633DD41
+	email = jon.ronnenberg@gmail.com
+	name = dotnetCarpenter
+[commit]
+[gpg]
+	program = gpg
+[core]
+	eol = lf
+	autocrlf = input
+[credential]
+	helper = cache

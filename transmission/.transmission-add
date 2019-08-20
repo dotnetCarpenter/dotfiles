@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+# This file is used by the alias "t-add", defined in .transmission_aliases
+
+if [[ -f $1 ]]
+then
+  transmission-remote --auth 'transmission:transmission' -a "$1"
+else
+  echo "Torrent file not found"
+fi
