@@ -16,3 +16,9 @@ alias ostat='stat -c '%a' '
 if [ -f "$DEFAULT_DOTFILES_DIR/../transmission/.transmission_aliases" ]; then
   source "$DEFAULT_DOTFILES_DIR/../transmission/.transmission_aliases";
 fi
+
+# open folder in Windows Explorer via "open ." e.g. "open path"
+open()
+{
+  explorer.exe `wslpath -w "$1"`
+}
