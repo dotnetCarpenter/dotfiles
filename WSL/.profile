@@ -28,6 +28,11 @@ if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
+# set PATH so it includes yarn global bin if it exists
+if [ -d "$HOME/.yarn/bin" ] ; then
+    PATH="$HOME/.yarn/bin:$PATH"
+fi
+
 # ssh-agent enables ssh-add to remember ssh passphrase
 if [[ -z "$(pidof ssh-agent)" ]]
 then
