@@ -79,3 +79,6 @@ update_terminal_cwd ()
 
 PROMPT_COMMAND=set_my_tab
 ### END SET TERMINAL TITLE ###
+# Install Ruby Gems to ~/gems
+export GEM_HOME="$HOME/gems"
+export PATH="$HOME/gems/bin:$PATH"
