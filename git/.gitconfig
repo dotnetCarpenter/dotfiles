@@ -1,6 +1,7 @@
 [alias]
 	st = status
 	ch = checkout
+	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
 [user]
 	signingkey = C32DC3150633DD41
 	email = jon.ronnenberg@gmail.com
