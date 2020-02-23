@@ -6,7 +6,7 @@
 # watch alertmemory.sh
 
 free=$(free -mt | grep Total | awk '{print $4}')
-available=$(free -mt | grep Total | awk '{print $3}')
+available=$(free -mt | grep Total | awk '{print $2}')
 available_in_percent=`echo "scale=1; $free / $available * 100" | bc`
 message="$available_in_percent% ($free MB) out of $available MB"
 
