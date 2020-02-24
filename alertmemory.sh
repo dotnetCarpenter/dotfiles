@@ -1,18 +1,31 @@
 #!/bin/bash
 
 # can be run with:
-# setsid watch alertmemory.sh >/dev/null 2>&1 < /dev/null &
+# setsid alertmemory.sh >/dev/null 2>&1 < /dev/null &
 # or
-# watch alertmemory.sh >/dev/null 2>&1 </dev/null &
+# alertmemory.sh >/dev/null 2>&1 </dev/null &
 
-free=$(free -mt | grep Total | awk '{print $4}')
-available=$(free -mt | grep Total | awk '{print $2}')
-available_in_percent=`echo "scale=1;$free / $available * 100" | bc`
-available_in_percent_rounded=${available_in_percent%.*}
-message="$available_in_percent% ($free MB) out of $available MB RAM left"
+CHECK_FAST=2
+CHECK_SLOW=20
+CHECK_EVERY=$CHECK_FAST
+THRESHOLD=5
 
-if [[ "$available_in_percent_rounded" -le 50 ]]; then
-	notify-send --urgency=critical "WARNING: $message"
-fi
+checkRam () {
+	free=$(free -mt | grep Total | awk '{print $4}')
+	available=$(free -mt | grep Total | awk '{print $2}')
+	available_in_percent=`echo "scale=2;$free / $available * 100" | bc`
+	available_in_percent_rounded=${available_in_percent%.*}
+	message="$available_in_percent% ($free MB) out of $available MB RAM left"
 
-echo $message
+	if [[ "$available_in_percent_rounded" -le $THRESHOLD ]]; then
+		notify-send --urgency=critical --expire-time 10 "WARNING: $message"
+		CHECK_EVERY=$CHECK_SLOW
+	else
+		CHECK_EVERY=$CHECK_FAST
+	fi
+
+#	echo "debug: free $free available $available available_in_percent $available_in_percent available_in_percent_rounded $available_in_percent_rounded"
+	echo $message
+}
+
+while sleep $CHECK_EVERY; do checkRam; done
