@@ -8,7 +8,7 @@
 CHECK_FAST=2
 CHECK_SLOW=20
 CHECK_EVERY=$CHECK_FAST
-THRESHOLD=5
+THRESHOLD=4
 
 checkRam () {
 	free=$(free -mt | grep Total | awk '{print $4}')
@@ -18,7 +18,7 @@ checkRam () {
 	message="$available_in_percent% ($free MB) out of $available MB RAM left"
 
 	if [[ "$available_in_percent_rounded" -le $THRESHOLD ]]; then
-		notify-send --urgency=critical --expire-time 10 "WARNING: $message"
+		notify-send --urgency=normal --expire-time=10000 "WARNING: $message"
 		CHECK_EVERY=$CHECK_SLOW
 	else
 		CHECK_EVERY=$CHECK_FAST
