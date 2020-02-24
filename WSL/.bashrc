@@ -132,3 +132,9 @@ fi
 if [ -d "$HOME/projects/playground/wabt/build" ] ; then
     PATH="$HOME/projects/playground/wabt/build:$PATH"
 fi
+# Install Ruby Gems to ~/gems
+export GEM_HOME="$HOME/gems"
+export PATH="$HOME/gems/bin:$PATH"
+
+# set PATH yarn global installed executables
+export PATH="$PATH:`yarn --offline global bin`"
