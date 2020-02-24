@@ -1,7 +1,8 @@
 [alias]
 	st = status
 	ch = checkout
-	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset' --abbrev-commit
+	stat = !git status && git diff --staged --stat
 [user]
 	signingkey = C32DC3150633DD41
 	email = jon.ronnenberg@gmail.com
@@ -14,3 +15,8 @@
 	autocrlf = input
 [credential]
 	helper = cache
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
