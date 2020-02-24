@@ -2,8 +2,8 @@
 
 alias cls=clear
 
-#alias clip="xclip -selection clipboard"
-alias clip="clip.exe"
+alias clip="xclip -selection clipboard"
+#alias clip="clip.exe"
 
 # alias for watch so watch can watch aliases
 alias watch='watch '
