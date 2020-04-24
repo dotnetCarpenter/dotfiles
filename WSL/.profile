@@ -79,6 +79,37 @@ update_terminal_cwd ()
 
 PROMPT_COMMAND=set_my_tab
 ### END SET TERMINAL TITLE ###
+
 # Install Ruby Gems to ~/gems
-export GEM_HOME="$HOME/gems"
-export PATH="$HOME/gems/bin:$PATH"
+if [ -f "$HOME/gems" ]; then
+    export GEM_HOME="$HOME/gems"
+    export PATH="$HOME/gems/bin:$PATH"
+fi
+
+# enable nvm for loading different versions of nodejs
+if [ -d "$HOME/.nvm" ]; then
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+fi
+
+# setup git format in terminal
+if [ -f ~/.bash_gitps1 ]; then
+  source ~/.bash_gitps1;
+fi
+
+# set PATH to WASM tools
+if [ -d "$HOME/projects/playground/wabt/build" ] ; then
+    PATH="$HOME/projects/playground/wabt/build:$PATH"
+fi
+
+# set PATH yarn global installed executables
+export PATH="$PATH:`yarn --offline global bin`"
+
+if [ -d "$HOME/perl5" ]; then
+    PATH="$HOME/perl5/bin${PATH:+:${PATH}}"; export PATH;
+    PERL5LIB="/home/dotnet/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
+    PERL_LOCAL_LIB_ROOT="/home/dotnet/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
+    PERL_MB_OPT="--install_base \"/home/dotnet/perl5\""; export PERL_MB_OPT;
+    PERL_MM_OPT="INSTALL_BASE=/home/dotnet/perl5"; export PERL_MM_OPT;
+fi

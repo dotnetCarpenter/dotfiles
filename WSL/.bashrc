@@ -74,6 +74,10 @@ xterm*|rxvt*)
     ;;
 esac
 
+# Set terminal title to current directory
+# This is a much shorter version of the set_my_tab function in .profile
+PROMPT_COMMAND='echo -ne "\033]0;$(basename ${PWD})\007"'
+
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
@@ -117,24 +121,3 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
-
-# enable nvm for loading different versions of nodejs
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-# setup git format in terminal
-if [ -f ~/.bash_gitps1 ]; then
-  source ~/.bash_gitps1;
-fi
-
-# set PATH to WASM tools
-if [ -d "$HOME/projects/playground/wabt/build" ] ; then
-    PATH="$HOME/projects/playground/wabt/build:$PATH"
-fi
-# Install Ruby Gems to ~/gems
-export GEM_HOME="$HOME/gems"
-export PATH="$HOME/gems/bin:$PATH"
-
-# set PATH yarn global installed executables
-export PATH="$PATH:`yarn --offline global bin`"
