@@ -7,6 +7,9 @@
 
     "defaultProfile": "{2c4de342-38b7-51cf-b940-2309a097f518}",
 
+    // Adds a debugging feature that can be activated by holding down Left Alt and Right Alt when a new tab is being created.
+    // "debugFeatures": true,
+
     "profiles":
     {
         "defaults":
