@@ -8,7 +8,9 @@ export DEFAULT_DOTFILES_DIR="/home/dotnet/projects/opensource/dotfiles/WSL"
 
 # the default umask is set in /etc/profile; for setting the umask
 # for ssh logins, install and configure the libpam-umask package.
-umask 022
+if [[ "$(umask)" = "0000" ]]; then
+  umask 0022
+fi
 
 # if running bash
 if [ -n "$BASH_VERSION" ]; then
