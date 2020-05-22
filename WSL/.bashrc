@@ -76,7 +76,7 @@ esac
 
 # Set terminal title to current directory
 # This is a much shorter version of the set_my_tab function in .profile
-PROMPT_COMMAND='echo -ne "\033]0;$(basename ${PWD})\007"'
+#PROMPT_COMMAND='echo -ne "\033]0;$(basename ${PWD})\007"'
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
