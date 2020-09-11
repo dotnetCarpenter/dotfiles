@@ -4,7 +4,7 @@
 	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset' --abbrev-commit
 	stat = !git status && git diff --staged --stat
 [user]
-	signingkey = 5710E6D970100E5EBCBFFC93EB002473AC5595E6
+	signingkey = 943A3E05981F43C51F6DAEFFBADA16F6D668FBFF
 	email = jon.ronnenberg@gmail.com
 	name = dotnetCarpenter
 [commit]

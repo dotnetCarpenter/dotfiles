@@ -22,3 +22,7 @@ open()
 {
   explorer.exe `wslpath -w "$1"`
 }
+
+# starred_search can be install via `yarn global add starred_search
+# https://github.com/Link-/starred_search
+alias gitstar="starred_search --user 'dotnetcarpenter' --cache-dir '/tmp/.cache' --find"

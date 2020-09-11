@@ -26,18 +26,17 @@ if [ -d "$HOME/bin" ] ; then
 fi
 
 # set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/.local/bin" ] ; then
+if [ -d "$HOME/.local/bin" ]; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
 # set PATH so it includes yarn global bin if it exists
-if [ -d "$HOME/.yarn/bin" ] ; then
+if [ -d "$HOME/.yarn/bin" ]; then
     PATH="$HOME/.yarn/bin:$PATH"
 fi
 
 # ssh-agent enables ssh-add to remember ssh passphrase
-if [[ -z "$(pidof ssh-agent)" ]]
-then
+if [[ -z "$(pidof ssh-agent)" ]]; then
 echo "Starting ssh-agent"
 eval $(ssh-agent -s)
 echo "Use ssh-add to type in your passphrase once"
@@ -117,3 +116,11 @@ if [ -d "$HOME/perl5" ]; then
 fi
 
 export PATH="$HOME/.cargo/bin:$PATH"
+
+# Start Docker daemon automatically when logging in if not running.
+# https://blog.nillsf.com/index.php/2020/06/29/how-to-automatically-start-the-docker-daemon-on-wsl2/
+RUNNING=`ps aux | grep dockerd | grep -v grep`
+if [ -z "$RUNNING" ]; then
+    sudo dockerd > /dev/null 2>&1 &
+    disown
+fi
