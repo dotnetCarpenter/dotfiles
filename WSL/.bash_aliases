@@ -12,6 +12,9 @@ alias watch='watch '
 # https://www.cyberciti.biz/faq/get-octal-file-permissions-from-command-line-on-linuxunix/
 alias ostat='stat -c '%a' '
 
+# git status because I mistype it all the time
+alias gitst='git status'
+
 # setup transmission shortcuts
 if [ -f "$DEFAULT_DOTFILES_DIR/../transmission/.transmission_aliases" ]; then
   source "$DEFAULT_DOTFILES_DIR/../transmission/.transmission_aliases";
@@ -26,3 +29,7 @@ open()
 # starred_search can be install via `yarn global add starred_search
 # https://github.com/Link-/starred_search
 alias gitstar="starred_search --user 'dotnetcarpenter' --cache-dir '/tmp/.cache' --find"
+
+alias update="sudo apt update && apt list --upgradable"
+
+alias server="python3 -m http.server"

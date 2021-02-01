@@ -36,11 +36,11 @@ if [ -d "$HOME/.yarn/bin" ]; then
 fi
 
 # ssh-agent enables ssh-add to remember ssh passphrase
-if [[ -z "$(pidof ssh-agent)" ]]; then
-echo "Starting ssh-agent"
-eval $(ssh-agent -s)
-echo "Use ssh-add to type in your passphrase once"
-fi
+#if [[ -z "$(pidof ssh-agent)" ]]; then
+#echo "Starting ssh-agent"
+#eval $(ssh-agent -s)
+#echo "Use ssh-add to type in your passphrase once"
+#fi
 
 # enable passphrase prompt for gpg
 export GPG_TTY=$(tty)
@@ -124,3 +124,12 @@ if [ -z "$RUNNING" ]; then
     sudo dockerd > /dev/null 2>&1 &
     disown
 fi
+
+# Open new terminal tab in same directory as existing tab (WSL)
+# https://github.com/microsoft/terminal/issues/3158
+# https://unix.stackexchange.com/q/32508/34980
+
+# Show formatted markdown in less
+# https://stackoverflow.com/q/15496865/205696
+export LESSOPEN=".lessopen.sh %s"
+export LESSCLOSE=".lessclose.sh %s %s"
