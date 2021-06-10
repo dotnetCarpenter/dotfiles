@@ -21,8 +21,7 @@ if [ -f "$DEFAULT_DOTFILES_DIR/../transmission/.transmission_aliases" ]; then
 fi
 
 # open folder in Windows Explorer via "open ." e.g. "open path"
-open()
-{
+open() {
   explorer.exe `wslpath -w "$1"`
 }
 
@@ -33,3 +32,13 @@ alias gitstar="starred_search --user 'dotnetcarpenter' --cache-dir '/tmp/.cache'
 alias update="sudo apt update && apt list --upgradable"
 
 alias server="python3 -m http.server"
+
+alias darkcss="cat ~/.dark.css"
+# https://superuser.com/questions/32355/undo-linuxs-rm
+alias rm=trash
+
+# start sublime text from terminal
+alias subl='/mnt/c/Program\ Files/Sublime\ Text/subl.exe'
+
+# when you got a loooong commit hash but you want to post the short one...
+alias shortcommit="git rev-parse --short $1"

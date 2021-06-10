@@ -53,11 +53,6 @@ set_prompt () {
     echo -ne "\033]0;$BASE_PATH\007"
 }
 
-set_my_tab () {
-   update_terminal_cwd
-   set_prompt
-}
-
 update_terminal_cwd ()
 {
     local url_path='';
@@ -76,6 +71,11 @@ update_terminal_cwd ()
     };
 
     printf '\e]7;%s\a' "file://$HOSTNAME$url_path"
+}
+
+set_my_tab () {
+   update_terminal_cwd
+   set_prompt
 }
 
 PROMPT_COMMAND=set_my_tab
