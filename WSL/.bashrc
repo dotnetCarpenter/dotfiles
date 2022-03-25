@@ -4,11 +4,14 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
+#set -x
+
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
       *) return;;
 esac
+
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
@@ -73,10 +76,6 @@ xterm*|rxvt*)
 *)
     ;;
 esac
-
-# Set terminal title to current directory
-# This is a much shorter version of the set_my_tab function in .profile
-#PROMPT_COMMAND='echo -ne "\033]0;$(basename ${PWD})\007"'
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then

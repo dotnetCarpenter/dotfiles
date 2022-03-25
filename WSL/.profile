@@ -4,20 +4,42 @@
 # see /usr/share/doc/bash/examples/startup-files for examples.
 # the files are located in the bash-doc package.
 
+# enable verbose mode for debugging
+# set -v
+# enable trace mode for debugging
+# set -x
+# stop executing to pin-point buggy execution in bash scripts
+# kill -SIGINT $$
+
 export DEFAULT_DOTFILES_DIR="/home/dotnet/projects/opensource/dotfiles/WSL"
+
+# Set the DISPLAY environment variable on Linux to use the Windows host's IP
+# address as WSL2 and the Windows host are not in the same network device.
+# It is necessary to set the DISPLAY environment variable with the correct IP address on launch.
+#export DISPLAY="`sed -n 's/nameserver //p' /etc/resolv.conf`:0"
+
+# use wslu to open Windows browser from linux
+# https://superuser.com/a/1368878/279100
+# Leaving this out will set the browser to the default ELinks
+export BROWSER=wslview
+
+# Set terminal title to current directory
+# This is a much shorter version of the set_my_tab function in .profile
+PROMPT_COMMAND='echo -ne "\033]0;$(basename ${PWD})\007"'
+
+# NOT WORKING!
+# set new tabs in WSL to open in current path
+# https://github.com/microsoft/terminal/issues/3158#issuecomment-803502834
+#export PROMPT_COMMAND='printf "\e]9;9;%s\e\\" "$(wslpath -m "$PWD")"'
+PROMPT_COMMAND=${PROMPT_COMMAND:+"$PROMPT_COMMAND; "}'printf "\e]9;9;%s\e\\" "$(wslpath -w "$PWD")"'
+
+# set firefund as the default team with heroku CLI.
+export HEROKU_ORGANIZATION=firefund
 
 # the default umask is set in /etc/profile; for setting the umask
 # for ssh logins, install and configure the libpam-umask package.
 if [[ "$(umask)" = "0000" ]]; then
   umask 0022
-fi
-
-# if running bash
-if [ -n "$BASH_VERSION" ]; then
-    # include .bashrc if it exists
-    if [ -f "$HOME/.bashrc" ]; then
-	. "$HOME/.bashrc"
-    fi
 fi
 
 # set PATH so it includes user's private bin if it exists
@@ -32,8 +54,18 @@ fi
 
 # set PATH so it includes yarn global bin if it exists
 if [ -d "$HOME/.yarn/bin" ]; then
-    PATH="$HOME/.yarn/bin:$PATH"
+    PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 fi
+
+
+# if running bash
+if [ -n "$BASH_VERSION" ]; then
+    # include .bashrc if it exists
+    if [ -f "$HOME/.bashrc" ]; then
+       . "$HOME/.bashrc"
+    fi
+fi
+
 
 # ssh-agent enables ssh-add to remember ssh passphrase
 #if [[ -z "$(pidof ssh-agent)" ]]; then
@@ -42,44 +74,10 @@ fi
 #echo "Use ssh-add to type in your passphrase once"
 #fi
 
+
 # enable passphrase prompt for gpg
 export GPG_TTY=$(tty)
 
-## START SET TERMINAL TITLE ###
-# https://superuser.com/questions/79972/set-the-title-of-the-terminal-window-to-the-current-directory
-# set the title of the terminal tab to the current directory
-set_prompt () {
-    BASE_PATH="${PWD##*/}"
-    echo -ne "\033]0;$BASE_PATH\007"
-}
-
-update_terminal_cwd ()
-{
-    local url_path='';
-    {
-        local i ch hexch LC_CTYPE=C LC_ALL=;
-        for ((i = 0; i < ${#PWD}; ++i))
-        do
-            ch="${PWD:i:1}";
-            if [[ "$ch" =~ [/._~A-Za-z0-9-] ]]; then
-                url_path+="$ch";
-            else
-                printf -v hexch "%02X" "'$ch";
-                url_path+="%${hexch: -2:2}";
-            fi;
-        done
-    };
-
-    printf '\e]7;%s\a' "file://$HOSTNAME$url_path"
-}
-
-set_my_tab () {
-   update_terminal_cwd
-   set_prompt
-}
-
-PROMPT_COMMAND=set_my_tab
-### END SET TERMINAL TITLE ###
 
 # Install Ruby Gems to ~/gems
 if [ -f "$HOME/gems" ]; then
@@ -88,24 +86,23 @@ if [ -f "$HOME/gems" ]; then
 fi
 
 # enable nvm for loading different versions of nodejs
-if [ -d "$HOME/.nvm" ]; then
-    export NVM_DIR="$HOME/.nvm"
-    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-fi
+# commented out because I now use n
+#if [ -d "$HOME/.nvm" ]; then
+#    export NVM_DIR="$HOME/.nvm"
+#    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+#    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+#fi
 
 # setup git format in terminal
 if [ -f ~/.bash_gitps1 ]; then
   source ~/.bash_gitps1;
 fi
 
+
 # set PATH to WASM tools
 if [ -d "$HOME/projects/playground/wabt/build" ] ; then
     PATH="$HOME/projects/playground/wabt/build:$PATH"
 fi
-
-# set PATH yarn global installed executables
-export PATH="$PATH:`yarn --offline global bin`"
 
 if [ -d "$HOME/perl5" ]; then
     PATH="$HOME/perl5/bin${PATH:+:${PATH}}"; export PATH;
@@ -115,15 +112,18 @@ if [ -d "$HOME/perl5" ]; then
     PERL_MM_OPT="INSTALL_BASE=/home/dotnet/perl5"; export PERL_MM_OPT;
 fi
 
+
 export PATH="$HOME/.cargo/bin:$PATH"
 
+# DISABLED BECAUSE OF ANNOYING SUDO PASSWORD WHEN OPENING A NEW TERMINAL!
+# *STARTING DOCKER DESKTOP SEEMS TO START THE DOCKER DEAMON ANYWAY*
 # Start Docker daemon automatically when logging in if not running.
 # https://blog.nillsf.com/index.php/2020/06/29/how-to-automatically-start-the-docker-daemon-on-wsl2/
-RUNNING=`ps aux | grep dockerd | grep -v grep`
-if [ -z "$RUNNING" ]; then
-    sudo dockerd > /dev/null 2>&1 &
-    disown
-fi
+#RUNNING=`ps aux | grep dockerd | grep -v grep`
+#if [ -z "$RUNNING" ]; then
+#    sudo dockerd > /dev/null 2>&1 &
+#    disown
+#fi
 
 # Open new terminal tab in same directory as existing tab (WSL)
 # https://github.com/microsoft/terminal/issues/3158
@@ -133,3 +133,6 @@ fi
 # https://stackoverflow.com/q/15496865/205696
 export LESSOPEN=".lessopen.sh %s"
 export LESSCLOSE=".lessclose.sh %s %s"
+
+# heroku autocomplete setup
+HEROKU_AC_BASH_SETUP_PATH=/home/dotnet/.cache/heroku/autocomplete/bash_setup && test -f $HEROKU_AC_BASH_SETUP_PATH && source $HEROKU_AC_BASH_SETUP_PATH;

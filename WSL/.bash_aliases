@@ -13,7 +13,7 @@ alias watch='watch '
 alias ostat='stat -c '%a' '
 
 # git status because I mistype it all the time
-alias gitst='git status'
+alias gs='git status'
 
 # setup transmission shortcuts
 if [ -f "$DEFAULT_DOTFILES_DIR/../transmission/.transmission_aliases" ]; then
