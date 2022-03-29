@@ -12,3 +12,6 @@ Symlink the following files (change path as necessary):
 .gitconfig -> projects/opensource/dotfiles/git/.gitconfig
 .profile -> projects/opensource/dotfiles/WSL/.profile
 ```
+
+
+Forgotten bash repo: https://github.com/dotnetCarpenter/bash
