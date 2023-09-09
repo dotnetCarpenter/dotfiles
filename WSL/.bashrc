@@ -4,11 +4,14 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
+#set -x
+
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
       *) return;;
 esac
+
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
@@ -116,19 +119,4 @@ if ! shopt -oq posix; then
   elif [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
   fi
-fi
-
-# enable nvm for loading different versions of nodejs
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-# setup git format in terminal
-if [ -f ~/.bash_gitps1 ]; then
-  source ~/.bash_gitps1;
-fi
-
-# set PATH to WASM tools
-if [ -d "$HOME/projects/playground/wabt/build" ] ; then
-    PATH="$HOME/projects/playground/wabt/build:$PATH"
 fi

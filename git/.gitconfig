@@ -1,8 +1,10 @@
 [alias]
 	st = status
 	ch = checkout
+	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset' --abbrev-commit
+	stat = !git status && git diff --staged --stat
 [user]
-	signingkey = C32DC3150633DD41
+	signingkey = AA7C209FEE252300B3C295A62C601A0564141686
 	email = jon.ronnenberg@gmail.com
 	name = dotnetCarpenter
 [commit]
@@ -15,3 +17,8 @@
 	helper = cache
 [init]
 	defaultBranch = main
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
